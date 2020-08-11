@@ -1,7 +1,9 @@
 # Course: CS261 - Data Structures
 # Assignment: 5
 # Student: Connor LaCour
-# Description:
+# Description: This program utilizes DynamicArray and LinkedList classes to implement a HashMap. The class
+# HashMap contains the following methods: empty_buckets, table_load, clear, put, contains_key, get, remove,
+# resize_table, get_keys.
 
 
 # Import pre-written DynamicArray and LinkedList classes

@@ -201,7 +201,7 @@ class HashMap:
 
         keys_arr = DynamicArray()
 
-        for i in range(self.capacity):
+        for i in range(self.capacity-1, -1, -1):
             bucket = self.buckets.get_at_index(i)
 
             for node in bucket:

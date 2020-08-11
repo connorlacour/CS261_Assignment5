@@ -209,7 +209,7 @@ class HashMap:
                     if node is not None:
                         keys_arr.append(node.key)
                 j += 1
-
+        """
         # reverse for gradescope
         half_length = int(keys_arr.length() / 2)
         full_length = int(keys_arr.length())
@@ -217,6 +217,7 @@ class HashMap:
         for n in range(half_length):
             mirror = (full_length - 1) - n
             keys_arr.swap(n, mirror)
+        """
 
         return keys_arr
 

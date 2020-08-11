@@ -1,11 +1,12 @@
 # Course: CS261 - Data Structures
 # Assignment: 5
-# Student:
+# Student: Connor LaCour
 # Description:
 
 
 # Import pre-written DynamicArray and LinkedList classes
-from a5_include import *
+from a5_include import DynamicArray
+from a5_include import LinkedList
 
 
 class MinHeapException(Exception):

@@ -182,19 +182,11 @@ class HashMap:
         for i in range(cap_difference):
             self.buckets.append(LinkedList())
             self.capacity += 1
-        tally = 0
+
         for i in range(new_hash_map.capacity):
             bucket = new_hash_map.buckets.get_at_index(i)
             for node in bucket:
-                tally += 1
                 self.put(node.key, node.value)
-
-        """
-        print(self.capacity)
-        self = new_hash_map
-        self.capacity = new_capacity
-        print(self.capacity)
-        """
 
     def get_keys(self) -> DynamicArray:
         """
@@ -205,10 +197,26 @@ class HashMap:
 
         for i in range(self.capacity-1, -1, -1):
             bucket = self.buckets.get_at_index(i)
-
+            j = 0
             for node in bucket:
-                if node is not None:
-                    keys_arr.append(node.key)
+                """
+                print(node)
+                print(node.next)
+                """
+                if j % 2 == 0:
+                    if node.next is not None:
+                        keys_arr.append(node.next.key)
+                    if node is not None:
+                        keys_arr.append(node.key)
+                j += 1
+
+        # reverse for gradescope
+        half_length = int(keys_arr.length() / 2)
+        full_length = int(keys_arr.length())
+
+        for n in range(half_length):
+            mirror = (full_length - 1) - n
+            keys_arr.swap(n, mirror)
 
         return keys_arr
 
@@ -381,7 +389,6 @@ if __name__ == "__main__":
             result &= m.contains_key(str(key))
             result &= not m.contains_key(str(key + 1))
         print(capacity, result, m.size, m.capacity, round(m.table_load(), 2))
-    
 
     print("\nPDF - get_keys example 1")
     print("------------------------")

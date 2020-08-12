@@ -1,7 +1,9 @@
 # Course: CS261 - Data Structures
 # Assignment: 5
 # Student: Connor LaCour
-# Description:
+# Description: This program utilizes the imported DynamicArray class to implement a MinHeap. The
+# MinHeap class creates a heap object with the following methods: add, get_min, remove_min, and
+# build_heap.
 
 
 # Import pre-written DynamicArray and LinkedList classes
@@ -47,27 +49,209 @@ class MinHeap:
 
     def add(self, node: object) -> None:
         """
-        TODO: Write this implementation
+        add adds the given node into the heap
         """
-        pass
+
+        # add to next available node
+        self.heap.append(node)
+
+        new_node_index = self.heap.length() - 1
+        new_node_value = self.heap.get_at_index(new_node_index)
+        parent_index = ((new_node_index - 1) // 2)
+        parent_value = self.heap.get_at_index(parent_index)
+
+        while new_node_index != 0 and new_node_value < parent_value:
+
+            self.heap.swap(new_node_index, parent_index)
+            new_node_index = parent_index
+            parent_index = ((new_node_index - 1) // 2)
+            parent_value = self.heap.get_at_index(parent_index)
+
+        return
 
     def get_min(self) -> object:
         """
-        TODO: Write this implementation
+        get_min returns the minimum value in the heap
         """
-        return None
+        if self.heap.length() == 0:
+            raise MinHeapException
+
+        return self.heap.get_at_index(0)
 
     def remove_min(self) -> object:
         """
-        TODO: Write this implementation
+        remove_min removes the minimum value in the heap
         """
-        return None
+        if self.heap.length() == 0:
+            raise MinHeapException
+
+        min_val = self.get_min()
+
+        if self.heap.length() == 1:
+            self.heap.pop()
+
+        else:
+
+            last_in_heap = self.heap.get_at_index(self.heap.length() - 1)
+            self.heap.set_at_index(0, last_in_heap)
+            self.heap.pop()
+
+            replacement_index = 0
+            replacement_value = last_in_heap
+
+            left_child_index = (replacement_index * 2) + 1
+            right_child_index = (replacement_index * 2) + 2
+
+            if left_child_index < self.heap.length():
+                left_child_value = self.heap.get_at_index(left_child_index)
+            else:
+                left_child_value = None
+
+            if right_child_index < self.heap.length():
+                right_child_value = self.heap.get_at_index(right_child_index)
+            else:
+                right_child_value = None
+
+            while left_child_value is not None or right_child_value is not None:
+
+                if left_child_value is None:
+                    if replacement_value > right_child_value:
+                        self.heap.swap(replacement_index, right_child_index)
+                        break
+                    else:
+                        break
+
+                if right_child_value is None:
+                    if replacement_value > left_child_value:
+                        self.heap.swap(replacement_index, left_child_index)
+                        break
+                    else:
+                        break
+
+                if left_child_value < right_child_value:
+                    if replacement_value > left_child_value:
+                        self.heap.swap(replacement_index, left_child_index)
+
+                        replacement_index = left_child_index
+                        left_child_index = (replacement_index * 2) + 1
+                        right_child_index = (replacement_index * 2) + 2
+
+                        if left_child_index < self.heap.length():
+                            left_child_value = self.heap.get_at_index(left_child_index)
+                        else:
+                            left_child_value = None
+                        if right_child_index < self.heap.length():
+                            right_child_value = self.heap.get_at_index(right_child_index)
+                        else:
+                            right_child_value = None
+
+                    else:
+                        break
+
+                else:
+                    if replacement_value > right_child_value:
+                        self.heap.swap(replacement_index, right_child_index)
+
+                        replacement_index = right_child_index
+                        left_child_index = (replacement_index * 2) + 1
+                        right_child_index = (replacement_index * 2) + 2
+                        if left_child_index < self.heap.length():
+                            left_child_value = self.heap.get_at_index(left_child_index)
+                        else:
+                            left_child_value = None
+                        if right_child_index < self.heap.length():
+                            right_child_value = self.heap.get_at_index(right_child_index)
+                        else:
+                            right_child_value = None
+                    else:
+                        break
+
+        return min_val
 
     def build_heap(self, da: DynamicArray) -> None:
         """
-        TODO: Write this implementation
+        build_heap creates a heap out of a given DynamicArray object
         """
-        pass
+        new_arr = DynamicArray()
+        for i in range(da.length()):
+            new_arr.append(da.get_at_index(i))
+
+        self.heap = new_arr
+        if self.heap.length() == 0:
+            raise MinHeapException
+
+        k = (da.length() - 2) // 2
+
+        while k != -1:
+
+            cur_index = k
+            cur_value = da.get_at_index(k)
+            left_child_index = (cur_index * 2) + 1
+            right_child_index = (cur_index * 2) + 2
+
+            if left_child_index < self.heap.length():
+                left_child_value = self.heap.get_at_index(left_child_index)
+            else:
+                left_child_value = None
+            if right_child_index < self.heap.length():
+                right_child_value = self.heap.get_at_index(right_child_index)
+            else:
+                right_child_value = None
+
+            while left_child_value is not None or right_child_value is not None:
+
+                if left_child_value is None:
+                    if cur_value > right_child_value:
+                        self.heap.swap(cur_index, right_child_index)
+                        break
+                    else:
+                        break
+
+                if right_child_value is None:
+                    if cur_value > left_child_value:
+                        self.heap.swap(cur_index, left_child_index)
+                        break
+                    else:
+                        break
+
+                if left_child_value < right_child_value:
+                    if cur_value > left_child_value:
+                        self.heap.swap(cur_index, left_child_index)
+
+                        cur_index = left_child_index
+                        left_child_index = (cur_index * 2) + 1
+                        right_child_index = (cur_index * 2) + 2
+
+                        if left_child_index < self.heap.length():
+                            left_child_value = self.heap.get_at_index(left_child_index)
+                        else:
+                            left_child_value = None
+                        if right_child_index < self.heap.length():
+                            right_child_value = self.heap.get_at_index(right_child_index)
+                        else:
+                            right_child_value = None
+
+                    else:
+                        break
+
+                else:
+                    if cur_value > right_child_value:
+                        self.heap.swap(cur_index, right_child_index)
+
+                        cur_index = right_child_index
+                        left_child_index = (cur_index * 2) + 1
+                        right_child_index = (cur_index * 2) + 2
+                        if left_child_index < self.heap.length():
+                            left_child_value = self.heap.get_at_index(left_child_index)
+                        else:
+                            left_child_value = None
+                        if right_child_index < self.heap.length():
+                            right_child_value = self.heap.get_at_index(right_child_index)
+                        else:
+                            right_child_value = None
+                    else:
+                        break
+            k -= 1
 
 
 # BASIC TESTING
@@ -89,13 +273,11 @@ if __name__ == '__main__':
         h.add(value)
         print(h)
 
-
     print("\nPDF - get_min example 1")
     print("-----------------------")
     h = MinHeap(['fish', 'bird'])
     print(h)
     print(h.get_min(), h.get_min())
-
 
     print("\nPDF - remove_min example 1")
     print("--------------------------")
@@ -103,7 +285,6 @@ if __name__ == '__main__':
     while not h.is_empty():
         print(h, end=' ')
         print(h.remove_min())
-
 
     print("\nPDF - build_heap example 1")
     print("--------------------------")

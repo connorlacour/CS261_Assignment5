@@ -61,7 +61,7 @@ class HashMap:
 
     def clear(self) -> None:
         """
-        TODO: Write this implementation
+        clear clears the content of the hash map
         """
 
         if self.size == 0:
@@ -76,7 +76,7 @@ class HashMap:
 
     def get(self, key: str) -> object:
         """
-        TODO: Write this implementation
+        get returns the value associated with the given key
         """
 
         if self.size == 0:
@@ -93,7 +93,9 @@ class HashMap:
 
     def put(self, key: str, value: object) -> None:
         """
-        TODO: Write this implementation
+        put updates the key/value pair passed by the user
+        if the key does not exist in the hash map, the key/value pair are added
+        else, the corresponding key in the hash map is updated with the new value
         """
 
         generate_hash = self.hash_function(key)
@@ -111,7 +113,8 @@ class HashMap:
 
     def remove(self, key: str) -> None:
         """
-        TODO: Write this implementation
+        remove removes the value associated with the give key, if such a key
+        exists in the hash map
         """
 
         if self.size == 0:
@@ -129,7 +132,8 @@ class HashMap:
 
     def contains_key(self, key: str) -> bool:
         """
-        TODO: Write this implementation
+        contains_key returns True if the given key exists in the hash map,
+        otherwise it returns False
         """
         if self.size == 0:
             return False
@@ -145,7 +149,7 @@ class HashMap:
 
     def empty_buckets(self) -> int:
         """
-        TODO: Write this implementation
+        empty_buckets returns the number of empty 'buckets' in the hash map
         """
 
         tally = 0
@@ -158,13 +162,14 @@ class HashMap:
 
     def table_load(self) -> float:
         """
-        TODO: Write this implementation
+        table_load returns the value of the load on the table which is equal
+        to the table's size / table's capacity
         """
         return self.size / self.capacity
 
     def resize_table(self, new_capacity: int) -> None:
         """
-        TODO: Write this implementation
+        resize_table resizes the hash map to the given new_capacity
         """
 
         if new_capacity < 1:
@@ -190,7 +195,7 @@ class HashMap:
 
     def get_keys(self) -> DynamicArray:
         """
-        TODO: Write this implementation
+        get_keys returns an array of all keys present in the hash map
         """
 
         keys_arr = DynamicArray()
@@ -199,25 +204,13 @@ class HashMap:
             bucket = self.buckets.get_at_index(i)
             j = 0
             for node in bucket:
-                """
-                print(node)
-                print(node.next)
-                """
+
                 if j % 2 == 0:
                     if node.next is not None:
                         keys_arr.append(node.next.key)
                     if node is not None:
                         keys_arr.append(node.key)
                 j += 1
-        """
-        # reverse for gradescope
-        half_length = int(keys_arr.length() / 2)
-        full_length = int(keys_arr.length())
-
-        for n in range(half_length):
-            mirror = (full_length - 1) - n
-            keys_arr.swap(n, mirror)
-        """
 
         return keys_arr
 
@@ -360,8 +353,7 @@ if __name__ == "__main__":
     m.remove('key1')
     print(m.get('key1'))
     m.remove('key4')
-    
-    
+
     print("\nPDF - resize example 1")
     print("----------------------")
     m = HashMap(20, hash_function_1)
@@ -370,7 +362,6 @@ if __name__ == "__main__":
     m.resize_table(30)
     print(m.size, m.capacity, m.get('key1'), m.contains_key('key1'))
 
-    
     print("\nPDF - resize example 2")
     print("----------------------")
     m = HashMap(75, hash_function_2)

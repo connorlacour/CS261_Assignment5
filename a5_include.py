@@ -135,6 +135,6 @@ class DynamicArray:
         """ Set value of element at a given index """
         self.data[index] = value
 
-    def length(self) -> int:
+    def length(self) -> object:
         """ Return the length of the DA """
         return len(self.data)
